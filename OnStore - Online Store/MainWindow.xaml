@@ -1,0 +1,146 @@
+﻿<Window x:Class="OnStore___Online_Store.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnStore___Online_Store"
+        mc:Ignorable="d"
+        Title="OnStore_OnlineStore" MinHeight="900" MinWidth="800" MaxHeight="900" MaxWidth="1600" Icon="Sb.png" WindowStartupLocation="CenterScreen">
+
+    <Grid x:Name="GeneralGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Row="1" x:Name="listbox1" ItemsSource="{Binding ComplateProductsList}" Background="Bisque" MinHeight="500" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listbox1_SelectionChanged" >
+
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate x:Name="it">
+
+                    <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Center" >
+
+
+                    </WrapPanel>
+
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" x:Name="border1" Width="200" Height="250" Background="White" BorderBrush="#FF25BFBF" BorderThickness="5" Margin="5,25,5,5">
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" >
+                                    <Image Width="150" Height="150" Margin="0,8,0,0"  Source="{Binding ProductImagePath}"></Image>
+                                    <Label Width="200" Height="5" Background="#FF25BFBF" Margin="0,4,0,0"></Label>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" >
+                                    <TextBlock x:Name="ProductNameText" Text="{Binding Path=ProductName}" FontSize="14" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock  x:Name="ProductPriceText" Text="{Binding Path=ProductPrice}" FontSize="14" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock  x:Name="ProductProducerText" Text="{Binding Path=ProductProducer}" FontSize="14" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+        <Label Grid.Row="1" Grid.Column="1" Background="Gray">
+
+            <StackPanel x:Name="EditStackpanel">
+                <TextBox x:Name="AddProductNameText" Text="ProductName" Margin="5,5,0,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="False" MouseEnter="AddProductNameText_MouseEnter" MouseLeave="AddProductNameText_MouseLeave"></TextBox>
+                <TextBox x:Name="AddProductPriceText" Text="ProductPrice" Margin="5,5,0,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="False"  MouseEnter="AddProductPriceText_MouseEnter" MouseLeave="AddProductPriceText_MouseLeave"></TextBox>
+                <TextBox x:Name="AddProductProducerText" Text="ProductProducer" Margin="5,5,0,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="False"  MouseEnter="AddProductProducerText_MouseEnter" MouseLeave="AddProductProducerText_MouseLeave"></TextBox>
+
+                <StackPanel x:Name="StackDragDrop" Margin="5,10,0,0" Background="White" Drop="StackDragDrop_Drop" DragEnter="StackDragDrop_DragEnter" AllowDrop="True">
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <Label Width="150" Height="35" Content="Drag drop Image" Background="#FF25BFBF" Foreground="White"></Label>
+                            </StackPanel>
+                        </ToolTip>
+                    </StackPanel.ToolTip>
+                    
+                    <Image x:Name="ProductImage" Width="200" Height="150" Margin="5,10,0,0"  Source="{Binding SelectedItem.ProductImagePath, ElementName=listbox1}" AllowDrop="True">
+
+                        <Image.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <Label Width="150" Height="35" Content="Drag drop Image" Background="#FF25BFBF" Foreground="White"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </Image.ToolTip>
+
+                    </Image>
+
+                </StackPanel>
+                
+                <TextBox x:Name="PathTextbox"  TextWrapping="Wrap" Text="Path" Margin="5,10,0,0" IsReadOnly="True" Focusable="True" Visibility="Visible" />
+
+                <ToggleButton x:Name="AddRemoveButton"  Width="200" Height="50" FontSize="20" Content="Add/Remove"  Margin="5,10,0,0" Foreground="White" Background="#FF25BFBF" Click="AddButton_Click">
+
+                    <ToggleButton.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <Label Width="150" Height="35" Content="Remove by ProductName" Background="#FF25BFBF" Foreground="White"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </ToggleButton.ToolTip>
+                    
+                </ToggleButton>
+
+                <Button x:Name="EditButton"  Width="200" Height="50" FontSize="20" Content="Edit"  Margin="5,10,0,0" Foreground="White" Background="#FF25BFBF" Click="Edit_Click"></Button>
+                <TextBox x:Name="EditProductNameText" Text="{Binding ElementName=listbox1, Path=SelectedItem.ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True"></TextBox>
+
+
+
+                <Image x:Name="EditProductImage" Width="200" Height="150" Margin="5,10,0,0"  Source="{Binding SelectedItem.ProductImagePath, ElementName=listbox1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" AllowDrop="False" Drop="EditProductImage_Drop" DragEnter="EditProductImage_DragEnter">
+
+                        <Image.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <Label Width="150" Height="35" Content="Drag drop Image" Background="#FF25BFBF" Foreground="White"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </Image.ToolTip>
+
+                    </Image>
+                
+      
+            </StackPanel>
+
+
+
+
+        </Label>
+        <TextBox x:Name="SearchTextbox" Text="{Binding ElementName=listbox1, Path=SelectedItem.ProductName, Mode=OneWayToSource}" Grid.Row="0" BorderThickness="5" BorderBrush="#FF25BFBF" Foreground="#FF25BFBF" FontWeight="Bold" IsUndoEnabled="False" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" FontSize="50" VerticalContentAlignment="Center"></TextBox>
+        <ToggleButton x:Name="SearchButton" Grid.Column="1" FontSize="20" Content="Search"  Margin="0" Foreground="White" Background="#FF25BFBF" Click="SearchButton_Click"/>
+
+    </Grid>
+</Window>
